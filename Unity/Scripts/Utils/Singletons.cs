@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Author: Not Anik Patel :pepeScheme:
+// Author: Anik Patel
 // Description: Singeton parent class that handles instances between scenes
 // Version: 1.0
 // Changes: [N/A]
