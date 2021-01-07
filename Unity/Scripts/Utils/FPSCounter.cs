@@ -6,7 +6,6 @@ using TMPro;
 // Description: Basic class for use as a UI FPS counter
 // Version: 1.0
 // Changes: [N/A]
-// WARNING Only use this script in development, the console with give NullReferenceErrors but will still work
 public class FPSCounter : MonoBehaviour
 {
     private int fps;
