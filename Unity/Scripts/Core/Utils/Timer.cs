@@ -24,7 +24,7 @@ namespace Zone.Core.Utils
         public void Tick(float dt)
         {
             // Timer is done
-            if (_duration <= 0f)
+            if (_duration < 0f)
             {
                 return;
             }
@@ -36,6 +36,8 @@ namespace Zone.Core.Utils
             {
                 return;
             }
+
+            _duration = 0f;
 
             OnTimerEnd?.Invoke();
         }
