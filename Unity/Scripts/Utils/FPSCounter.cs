@@ -6,28 +6,31 @@ using TMPro;
 // Description: Basic class for use as a UI FPS counter
 // Version: 1.0
 // Changes: [N/A]
-public class FPSCounter : MonoBehaviour
+namespace Zone.Core.Utils
 {
-    private int fps;
-
-    // Boolean for if using TMPro or the base Unity UI
-    [SerializeField] private bool usingTMP = false;
-
-    // Refences to the Text Components
-    [SerializeField] private Text fpsText = null;
-    [SerializeField] private TMP_Text fpsTextTMP;
-
-    void Update()
+    public class FPSCounter : MonoBehaviour
     {
-        fps = (int) (1f / Time.unscaledDeltaTime);
-        if (usingTMP)
+        // Boolean for if using TMPro or the base Unity UI
+        [SerializeField] private bool usingTMP = false;
+
+        // Refences to the Text Components
+        [SerializeField] private Text fpsText = null;
+        [SerializeField] private TMP_Text fpsTextTMP;
+
+        private int fps;
+
+        void Update()
         {
-            fpsTextTMP.text = $"{fps} fps";
+            fps = (int) (1f / Time.unscaledDeltaTime);
+            if (usingTMP)
+            {
+                fpsTextTMP.text = $"{fps} fps";
+            }
+            else
+            {
+                fpsText.text = $"{fps} fps";
+            }
+            // Debug.Log($"Running at {fps}");
         }
-        else
-        {
-            fpsText.text = $"{fps} fps";
-        }
-        // Debug.Log($"Running at {fps}");
     }
 }

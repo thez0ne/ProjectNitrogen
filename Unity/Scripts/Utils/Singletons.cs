@@ -4,75 +4,78 @@ using UnityEngine;
 // Description: Singeton parent class that handles instances between scenes
 // Version: 1.0
 // Changes: [N/A]
-public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
+namespace Zone.Core.Utils
 {
-    // Enable for more detail in printing
-    public static bool verbose = false;
-    
-    // Enable to keep the attached object betweem scenes
-    public bool keepAlive = false;
-
-    private static T _instance = null;
-    public static T instance
+    public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
     {
-        get 
+        // Enable for more detail in printing
+        public static bool verbose = false;
+        
+        // Enable to keep the attached object betweem scenes
+        public bool keepAlive = false;
+
+        private static T _instance = null;
+        public static T instance
         {
-            if (_instance == null)
+            get 
             {
-                _instance = GameObject.FindObjectOfType<T>();
                 if (_instance == null)
                 {
-                    GameObject singletonObj = new GameObject();
-                    singletonObj.name = typeof(T).ToString();
-                    _instance = singletonObj.AddComponent<T>();
+                    _instance = GameObject.FindObjectOfType<T>();
+                    if (_instance == null)
+                    {
+                        GameObject singletonObj = new GameObject();
+                        singletonObj.name = typeof(T).ToString();
+                        _instance = singletonObj.AddComponent<T>();
+                    }
                 }
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    static public bool isInstanceAlive
-    {
-        get
+        static public bool isInstanceAlive
         {
-            return _instance != null;
+            get
+            {
+                return _instance != null;
+            }
         }
-    }
-    
-    // WARNING: Make sure to run base.Awake() if need to override
-    public virtual void Awake()
-    {
-        if (_instance != null)
+        
+        // WARNING: Make sure to run base.Awake() if need to override
+        public virtual void Awake()
         {
+            if (_instance != null)
+            {
+                if (verbose)
+                {
+                    print($"Multiple Instance of Singleton Detected {name} of {instance.name}");
+                }
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = GetComponent<T>();
+
+            if (keepAlive)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
+
+            if (_instance == null)
+            {
+                if (verbose)
+                {
+                    print($"Singleton<{typeof(T).Name}> Instance is null");
+                }
+                return;
+            }
+
             if (verbose)
             {
-                print($"Multiple Instance of Singleton Detected {name} of {instance.name}");
+                print($"Singleton instance found {instance.GetType().Name}");
             }
-            Destroy(gameObject);
-            return;
-        }
 
-        _instance = GetComponent<T>();
-
-        if (keepAlive)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
-        if (_instance == null)
-        {
-            if (verbose)
-            {
-                print($"Singleton<{typeof(T).Name}> Instance is null");
-            }
-            return;
-        }
-
-        if (verbose)
-        {
-            print($"Singleton instance found {instance.GetType().Name}");
         }
 
     }
-
 }

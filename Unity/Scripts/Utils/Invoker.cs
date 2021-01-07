@@ -5,26 +5,29 @@ using UnityEngine;
 // Description: Invoker Parent class to run commands from
 // Version: 1.0
 // Changes: [N/A]
-public class Invoker<T> : MonoBehaviour where T: ICommand
+namespace Zone.Core.Utils
 {
-    private static Queue<T> buffer;
-
-    void Awake()
+    public class Invoker<T> : MonoBehaviour where T: ICommand
     {
-        buffer = new Queue<T>();
-    }
+        private static Queue<T> buffer;
 
-
-    public static void AddCommand(T command)
-    {
-        buffer.Enqueue(command);
-    }
-    // Base update that just runs all the commands given by default
-    protected virtual void Update()
-    {
-        while (buffer.Count != 0)
+        void Awake()
         {
-            buffer.Dequeue().Execute();
+            buffer = new Queue<T>();
+        }
+
+        // Base update that just runs all the commands given by default
+        protected virtual void Update()
+        {
+            while (buffer.Count != 0)
+            {
+                buffer.Dequeue().Execute();
+            }
+        }
+
+        public static void AddCommand(T command)
+        {
+            buffer.Enqueue(command);
         }
     }
 }

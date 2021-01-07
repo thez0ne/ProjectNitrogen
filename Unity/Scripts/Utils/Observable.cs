@@ -4,38 +4,41 @@ using System.Collections.Generic;
 // Description: Observable class for values that other classes will listen for
 // Version: 1.0
 // Changes: [N/A]
-public class Observable<T>
+namespace Zone.Core.Utils
 {
-    // Delegate and Events for subscribing (+=) and unsubscribing (-=) to the given property changing
-    public delegate void ChangeValue(T v);
-    public event ChangeValue propertyUpdated;
-
-    T v;
-    public T val
+    public class Observable<T>
     {
-        get
-        {
-            return v;
-        }
-        set
-        {
-            T previousVal = v;
+        // Delegate and Events for subscribing (+=) and unsubscribing (-=) to the given property changing
+        public delegate void ChangeValue(T v);
+        public event ChangeValue propertyUpdated;
 
-            if (!EqualityComparer<T>.Default.Equals(previousVal, value))
+        T v;
+        public T val
+        {
+            get
             {
-                v = value;
-                if (propertyUpdated != null)
-                {
-                    propertyUpdated(v);
-                }
-            } 
-        }
-    }
+                return v;
+            }
+            set
+            {
+                T previousVal = v;
 
-    // Constructor
-    // Input - value: the initial value for the parameter
-    public Observable(T value)
-    {
-        v = value;
+                if (!EqualityComparer<T>.Default.Equals(previousVal, value))
+                {
+                    v = value;
+                    if (propertyUpdated != null)
+                    {
+                        propertyUpdated(v);
+                    }
+                } 
+            }
+        }
+
+        // Constructor
+        // Input - value: the initial value for the parameter
+        public Observable(T value)
+        {
+            v = value;
+        }
     }
 }
