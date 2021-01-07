@@ -8,11 +8,14 @@ namespace Zone.Core.Utils
 {
     public abstract class TimerMono : MonoBehaviour
     {
-        [SerializeField] float duration;
+        [SerializeField] protected float duration;
+        protected float startTimer;
         private Timer timer;
 
         void Start()
         {
+            // startTimer = duration;
+
             timer = new Timer(duration);
             timer.OnTimerEnd += HandleTimerEnd;
         }
@@ -23,5 +26,7 @@ namespace Zone.Core.Utils
         }
 
         protected abstract void HandleTimerEnd();
+
+        protected void ResetTimer() => timer.Reset();
     }
 }

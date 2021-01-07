@@ -9,6 +9,7 @@ namespace Zone.Core.Utils
     public class Timer
     {
         public float _duration { get; private set;}
+        private float startTimer;
 
         // Event to subscribe a method for when the timer is done
         public event Action OnTimerEnd;
@@ -17,6 +18,7 @@ namespace Zone.Core.Utils
         public Timer(float duration)
         {
             _duration = duration;
+            startTimer = duration;
         }
 
         public void Tick(float dt)
@@ -36,6 +38,11 @@ namespace Zone.Core.Utils
             }
 
             OnTimerEnd?.Invoke();
+        }
+
+        public void Reset()
+        {
+            _duration = startTimer;
         }
     }
 }
