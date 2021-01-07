@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using Zone.Core.Utils;
 
+// Author: Anik Patel
+// Description: Tests for the POCO Timer class
+// Version: 1.0
+// Changes: [N/A]
 public class TimerTest
 {
     
